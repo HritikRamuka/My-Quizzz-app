@@ -33,7 +33,7 @@ export default function App() {
       {showScore ? (
 				   <div className='score-section'>
 
-				   <span className="scoreCard"> {username},your score is </span>
+				   <span className="scoreCard"> {username},your score is {score}/{questions.length} </span>
 				   <div className="score">
 				   <span >correct answer : {score}</span>
 				   <span >incorrect answer :{questions.length-score}</span>
