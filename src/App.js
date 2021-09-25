@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import questions from "./components/data"
+import Trivia from "./components/Trivia"
+import Start from "./components/Start"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import "./App.css"
+export default function App() {
+	
 
-export default App;
+	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [showScore, setShowScore] = useState(false);
+	const [score, setScore] = useState(0);
+  const [username, setUsername] = useState(null)
+
+	const handleAnswerOptionClick = (isCorrect) => {
+		if (isCorrect) {
+			setScore(score + 1);
+		}
+
+		const nextQuestion = currentQuestion + 1;
+		if (nextQuestion < questions.length) {
+			setCurrentQuestion(nextQuestion);
+		} else {
+			setShowScore(true);
+		}
+	};
+	return (<>
+            <h1 className="title">My quizzz</h1>
+
+		<div className='app'>
+{username?
+      <>
+      {showScore ? (
+				   <div className='score-section'>
+
+				   <span className="scoreCard"> {username},your score is </span>
+				   <div className="score">
+				   <span >correct answer : {score}</span>
+				   <span >incorrect answer :{questions.length-score}</span>
+				   </div>
+				   
+				   </div> 
+			) : (
+				<>
+					<Trivia
+					currentQuestion={currentQuestion}
+			
+					handleAnswerOptionClick={ handleAnswerOptionClick}
+					/>
+            </>
+          )}
+          </>:<Start username={username}
+            setUsername={setUsername}/>}
+
+        </div>
+		</>
+      );
+    }
